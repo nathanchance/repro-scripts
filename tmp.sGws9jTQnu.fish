@@ -5,6 +5,12 @@ set build $llvm/build
 
 
 
+# Avoid known test failure
+if grep -q "RUN: grep x86_64-unknown-linux-gnu %t-embedded.cmd | count 1" $llvm/clang/test/CodeGen/thinlto_embed_bitcode.ll
+    git cp -n 2482648a795afbe12774168bbbf70dc14c031267
+    git cp -n 44174b3d518ed70482ff5df2879523a4e26f92cc
+end
+
 # Build LLVM. If the build or tests fail, the revision is untestable.
 podcmd $CBL_GIT/tc-build/build-llvm.py \
     --assertions \
@@ -15,7 +21,12 @@ podcmd $CBL_GIT/tc-build/build-llvm.py \
     --llvm-folder $llvm \
     --projects '"clang;lld"' \
     --targets X86 \
-    --show-build-commands; or exit 125
+    --show-build-commands
+set llvm_ret $status
+git rh
+if test $llvm_ret -ne 0
+    exit 125
+end
 
 
 
