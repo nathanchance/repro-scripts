@@ -29,10 +29,10 @@ git cl -q
 podcmd -s -v $build/stage1:/tc kmake LLVM=1 defconfig
 
 scripts/config \
-   -e KASAN \
-   -d KASAN_OUTLINE \
-   -e KASAN_INLINE \
-   -e KASAN_VMALLOC
+    -e KASAN \
+    -d KASAN_OUTLINE \
+    -e KASAN_INLINE \
+    -e KASAN_VMALLOC
 
 podcmd -s -v $build/stage1:/tc kmake LLVM=1 olddefconfig
 
@@ -69,12 +69,12 @@ git cl -q
 podcmd -s -v $build/stage1:/tc kmake LLVM=1 defconfig
 
 scripts/config \
-   -e GCOV_KERNEL \
-   -e GCOV_PROFILE_ALL \
-   -e KASAN \
-   -d KASAN_OUTLINE \
-   -e KASAN_INLINE \
-   -e KASAN_VMALLOC
+    -e GCOV_KERNEL \
+    -e GCOV_PROFILE_ALL \
+    -e KASAN \
+    -d KASAN_OUTLINE \
+    -e KASAN_INLINE \
+    -e KASAN_VMALLOC
 
 podcmd -s -v $build/stage1:/tc kmake LLVM=1 olddefconfig
 
@@ -100,12 +100,12 @@ git cl -q
 podcmd -s -v $build/stage1:/tc kmake LLVM=1 defconfig
 
 scripts/config \
-   -e GCOV_KERNEL \
-   -e GCOV_PROFILE_ALL \
-   -e KASAN \
-   -d KASAN_OUTLINE \
-   -e KASAN_INLINE \
-   -e KASAN_VMALLOC
+    -e GCOV_KERNEL \
+    -e GCOV_PROFILE_ALL \
+    -e KASAN \
+    -d KASAN_OUTLINE \
+    -e KASAN_INLINE \
+    -e KASAN_VMALLOC
 
 podcmd -s -v $build/stage1:/tc kmake LLVM=1 olddefconfig
 

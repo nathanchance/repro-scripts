@@ -41,15 +41,14 @@ void vivid_vbi_gen_sliced() {
     data0++;
   }
 }' | $llvm/build/stage1/bin/clang \
-   --target=arm-linux-gnueabi \
-   -march=armv7-a \
-   -msoft-float \
-   -O2 \
-   -mllvm -polly \
-   -mllvm -polly-vectorizer=stripmine \
-   -mllvm -polly-opt-fusion=max \
-   -c -x c -o /dev/null - &| \
-   grep "cannot insert node between set or sequence node and its filter children"
+    --target=arm-linux-gnueabi \
+    -march=armv7-a \
+    -msoft-float \
+    -O2 \
+    -mllvm -polly \
+    -mllvm -polly-vectorizer=stripmine \
+    -mllvm -polly-opt-fusion=max \
+    -c -x c -o /dev/null - &| grep "cannot insert node between set or sequence node and its filter children"
 
 set pipe_status $pipestatus
 if test "$pipe_status[2]" -eq 0
