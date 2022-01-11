@@ -20,7 +20,7 @@ for tree in linux{,-fast-header}
                     end
                 end
 
-                kmake -C $CBL_SRC/$tree ARCH=$target_arch $make_args $config all
+                kmake -C $CBL_SRC/$tree ARCH=$target_arch HOSTCFLAGS=-Wno-deprecated-declarations $make_args $config all
             end
         end
     end
