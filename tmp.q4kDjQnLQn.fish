@@ -12,13 +12,13 @@ cd $qemu_bld; or exit 125
 git -C $qemu_src submodule update \
     --init \
     --recursive; or exit 125
-sed -i '/LDFLAGS_NOPIE/d' $qemu_src/configure
+sed -i /LDFLAGS_NOPIE/d $qemu_src/configure
 sed -i 's; $(LDFLAGS_NOPIE) ; ;g' $qemu_src/pc-bios/optionrom/Makefile
 
 if $qemu_src/configure \
-    --disable-{docs,werror} \
-    --enable-pie \
-    --target-list=aarch64-softmmu
+        --disable-{docs,werror} \
+        --enable-pie \
+        --target-list=aarch64-softmmu
     if not make -skj(nproc)
         git -C $qemu_src rh
         exit 125

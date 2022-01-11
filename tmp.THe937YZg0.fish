@@ -3,8 +3,8 @@
 set lnx $CBL_SRC/linux-next
 
 if false
-git cp -n 6692c98c7df53502adb8b8b73ab9bcbd399f7a06
-git cp -n dd621ee0cf8eb32445c8f5f26d3b7555953071d8
+    git cp -n 6692c98c7df53502adb8b8b73ab9bcbd399f7a06
+    git cp -n dd621ee0cf8eb32445c8f5f26d3b7555953071d8
 end
 
 podcmd nathan/gcc-10 kmake -C $lnx ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- distclean multi_v5_defconfig all
