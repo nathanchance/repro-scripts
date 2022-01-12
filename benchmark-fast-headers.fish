@@ -3,7 +3,7 @@
 set host_arch (uname -m)
 
 # Test the tree first to make sure all configurations pass, otherwise benchmark will fail
-for tree in linux{,-fast-header}
+for tree in linux{,-fast-headers}
     for target_arch in arm64 x86_64
         for config in {def,all{mod,yes}}config
             for compiler in gcc clang
