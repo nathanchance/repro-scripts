@@ -46,6 +46,8 @@ echo "===================="
 echo (command -v clang)": "(clang --version | head -1)
 echo (command -v gcc)": "(gcc --version | head -1)
 echo
+echo
+echo
 
 # Actually do the benchmark
 for target_arch in arm64 x86_64
@@ -72,6 +74,8 @@ for target_arch in arm64 x86_64
                 --shell /bin/fish \
                 --warmup 1 \
                 "kmake -C $CBL_SRC/{tree} ARCH=$target_arch $make_args $config all"
+            echo
+            echo
             echo
 
         end
