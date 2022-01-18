@@ -26,7 +26,7 @@ for arch in arm64 x86_64
             end
 
             # Set the optimization level via Kconfig
-            switch optimization
+            switch $optimization
                 case 2
                     echo CONFIG_WERROR=n >allyes.config
                 case s
