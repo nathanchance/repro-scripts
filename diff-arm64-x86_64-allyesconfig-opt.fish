@@ -39,6 +39,7 @@ CONFIG_WERROR=n" >allyes.config
             kmake \
                 ARCH=$arch \
                 $make_args \
+                KCONFIG_ALLCONFIG=1 \
                 O=.build/$arch-$compiler-O$optimization \
                 distclean allyesconfig vmlinux; or exit
         end
