@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-if not (uname -m) = x86_64
+if not test (uname -m) = x86_64
     print_error "This script assumes an x86_64 host!"
     exit 1
 end
