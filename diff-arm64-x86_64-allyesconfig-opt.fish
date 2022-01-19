@@ -70,7 +70,7 @@ for arch in arm64 x86_64
         set vmlinux_size_O2 (diskus $vmlinux_O2)
         set vmlinux_size_Os (diskus $vmlinux_Os)
 
-        set diff_mb (math -s2 "($vmlinux_size_Os - $vmlinux_size_O2)" / 10000000)
+        set diff_mb (math -s2 "($vmlinux_size_Os - $vmlinux_size_O2)" / 1000000)
         set diff_per (math -s2 "($vmlinux_size_Os - $vmlinux_size_O2) * 100" / $vmlinux_size_Os)
 
         echo "  Difference: $diff_mb MB ($diff_per%)"
