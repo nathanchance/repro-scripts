@@ -6,6 +6,8 @@ for arg in $argv
     switch $arg
         case -g --gcc
             set gcc true
+        case -l --localmodconfig
+            set localmodconfig true
         case -m --menuconfig
             set menuconfig true
     end
@@ -30,6 +32,9 @@ crl -o .config https://github.com/archlinux/svntogit-packages/raw/packages/linux
 scripts/config -m DRM
 
 kmake $kmake_args olddefconfig; or exit
+if test "$localmodconfig" = true
+    kmake $kmake_args LSMOD=/tmp/modprobed.db localmodconfig; or exit
+end
 if test "$menuconfig" = true
     kmake $kmake_args menuconfig; or exit
 end
