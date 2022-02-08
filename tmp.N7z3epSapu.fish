@@ -1,5 +1,7 @@
 #!/usr/bin/env fish
 
+in_container_msg -h; or exit
+
 set results_log (mktemp -p $TMP_FOLDER)
 for lnx_ver in 5.1{7,6,5}
     for arch in arm64 x86_64

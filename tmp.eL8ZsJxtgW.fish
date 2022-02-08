@@ -3,17 +3,15 @@
 set llvm $CBL_SRC/llvm-project
 set build $llvm/build
 
-if false
 $CBL_GIT/tc-build/build-llvm.py \
-   --assertions \
-   --build-folder $build \
-   --build-stage1-only \
-   --check-targets clang ll{d,vm{,-unit}} \
-   --llvm-folder $llvm \
-   --projects "clang;lld" \
-   --targets "AArch64;ARM;X86" \
-   --show-build-commands; or exit 125
-end
+    --assertions \
+    --build-folder $build \
+    --build-stage1-only \
+    --check-targets clang ll{d,vm{,-unit}} \
+    --llvm-folder $llvm \
+    --projects "clang;lld" \
+    --targets "AArch64;ARM;X86" \
+    --show-build-commands; or exit 125
 
 set lnx $TMP_FOLDER/msm-4.14
 
