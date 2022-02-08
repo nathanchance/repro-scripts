@@ -29,7 +29,7 @@ scripts/setlocalversion --save-scmversion
 echo -debug >localversion.10-pkgname
 
 crl -o .config https://github.com/archlinux/svntogit-packages/raw/packages/linux/trunk/config; or exit
-scripts/config -m DRM
+scripts/config -e ZERO_CALL_USED_REGS -m DRM
 
 kmake $kmake_args olddefconfig; or exit
 if test "$localmodconfig" = true
