@@ -10,6 +10,8 @@ for arg in $argv
             set localmodconfig true
         case -m --menuconfig
             set menuconfig true
+        case -z --zero-call-used-regs
+            set -a scripts_cfg_args -e ZERO_CALL_USED_REGS
     end
 end
 
@@ -29,7 +31,7 @@ scripts/setlocalversion --save-scmversion
 echo -debug >localversion.10-pkgname
 
 crl -o .config https://github.com/archlinux/svntogit-packages/raw/packages/linux/trunk/config; or exit
-scripts/config -e ZERO_CALL_USED_REGS -m DRM
+scripts/config $scripts_cfg_args -m DRM
 
 kmake $kmake_args olddefconfig; or exit
 if test "$localmodconfig" = true
