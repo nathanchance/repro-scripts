@@ -68,10 +68,10 @@ hyperfine \
     -p "git -C $lnx cl -q" \
     -S fish \
     -w 1 \
-#    "kmake -C $lnx ARCH=arm LLVM=$llvm_install_pgo/bin/ defconfig all" \
-#    "kmake -C $lnx ARCH=arm LLVM=$llvm_install_pgo_bolt/bin/ defconfig all" \
-    "kmake -C $lnx ARCH=arm LLVM=$llvm_install_assertions_pgo/bin/ defconfig all" \
-    "kmake -C $lnx ARCH=arm LLVM=$llvm_install_assertions_pgo_bolt/bin/ defconfig all"; or return
+#    "kmake -C $lnx ARCH=arm CCACHE=0 LLVM=$llvm_install_pgo/bin/ defconfig all" \
+#    "kmake -C $lnx ARCH=arm CCACHE=0 LLVM=$llvm_install_pgo_bolt/bin/ defconfig all" \
+    "kmake -C $lnx ARCH=arm CCACHE=0 LLVM=$llvm_install_assertions_pgo/bin/ defconfig all" \
+    "kmake -C $lnx ARCH=arm CCACHE=0 LLVM=$llvm_install_assertions_pgo_bolt/bin/ defconfig all"; or return
 
 # arm64 defconfig
 hyperfine \
@@ -80,10 +80,10 @@ hyperfine \
     -p "git -C $lnx cl -q" \
     -S fish \
     -w 1 \
-#    "kmake -C $lnx ARCH=arm64 LLVM=$llvm_install_pgo/bin/ defconfig all" \
-#    "kmake -C $lnx ARCH=arm64 LLVM=$llvm_install_pgo_bolt/bin/ defconfig all" \
-    "kmake -C $lnx ARCH=arm64 LLVM=$llvm_install_assertions_pgo/bin/ defconfig all" \
-    "kmake -C $lnx ARCH=arm64 LLVM=$llvm_install_assertions_pgo_bolt/bin/ defconfig all"; or return
+#    "kmake -C $lnx ARCH=arm64 CCACHE=0 LLVM=$llvm_install_pgo/bin/ defconfig all" \
+#    "kmake -C $lnx ARCH=arm64 CCACHE=0 LLVM=$llvm_install_pgo_bolt/bin/ defconfig all" \
+    "kmake -C $lnx ARCH=arm64 CCACHE=0 LLVM=$llvm_install_assertions_pgo/bin/ defconfig all" \
+    "kmake -C $lnx ARCH=arm64 CCACHE=0 LLVM=$llvm_install_assertions_pgo_bolt/bin/ defconfig all"; or return
 
 # x86_64 defconfig
 hyperfine \
@@ -92,10 +92,10 @@ hyperfine \
     -p "git -C $lnx cl -q" \
     -S fish \
     -w 1 \
-#    "kmake -C $lnx ARCH=x86_64 LLVM=$llvm_install_pgo/bin/ defconfig all" \
-#    "kmake -C $lnx ARCH=x86_64 LLVM=$llvm_install_pgo_bolt/bin/ defconfig all" \
-    "kmake -C $lnx ARCH=x86_64 LLVM=$llvm_install_assertions_pgo/bin/ defconfig all" \
-    "kmake -C $lnx ARCH=x86_64 LLVM=$llvm_install_assertions_pgo_bolt/bin/ defconfig all"; or return
+#    "kmake -C $lnx ARCH=x86_64 CCACHE=0 LLVM=$llvm_install_pgo/bin/ defconfig all" \
+#    "kmake -C $lnx ARCH=x86_64 CCACHE=0 LLVM=$llvm_install_pgo_bolt/bin/ defconfig all" \
+    "kmake -C $lnx ARCH=x86_64 CCACHE=0 LLVM=$llvm_install_assertions_pgo/bin/ defconfig all" \
+    "kmake -C $lnx ARCH=x86_64 CCACHE=0 LLVM=$llvm_install_assertions_pgo_bolt/bin/ defconfig all"; or return
 
 echo CONFIG_WERROR=n >$root/werror.config
 
@@ -106,10 +106,10 @@ hyperfine \
     -p "git -C $lnx cl -q" \
     -S fish \
     -w 1 \
-#    "kmake -C $lnx ARCH=arm KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_pgo/bin/ allmodconfig all" \
-#    "kmake -C $lnx ARCH=arm KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_pgo_bolt/bin/ allmodconfig all" \
-    "kmake -C $lnx ARCH=arm KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_assertions_pgo/bin/ allmodconfig all" \
-    "kmake -C $lnx ARCH=arm KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_assertions_pgo_bolt/bin/ allmodconfig all"; or return
+#    "kmake -C $lnx ARCH=arm KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_pgo/bin/ allmodconfig all" \
+#    "kmake -C $lnx ARCH=arm KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_pgo_bolt/bin/ allmodconfig all" \
+    "kmake -C $lnx ARCH=arm KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_assertions_pgo/bin/ allmodconfig all" \
+    "kmake -C $lnx ARCH=arm KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_assertions_pgo_bolt/bin/ allmodconfig all"; or return
 
 # arm64 allmodconfig
 hyperfine \
@@ -118,10 +118,10 @@ hyperfine \
     -p "git -C $lnx cl -q" \
     -S fish \
     -w 1 \
-#    "kmake -C $lnx ARCH=arm64 KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_pgo/bin/ allmodconfig all" \
-#    "kmake -C $lnx ARCH=arm64 KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_pgo_bolt/bin/ allmodconfig all" \
-    "kmake -C $lnx ARCH=arm64 KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_assertions_pgo/bin/ allmodconfig all" \
-    "kmake -C $lnx ARCH=arm64 KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_assertions_pgo_bolt/bin/ allmodconfig all"; or return
+#    "kmake -C $lnx ARCH=arm64 KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_pgo/bin/ allmodconfig all" \
+#    "kmake -C $lnx ARCH=arm64 KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_pgo_bolt/bin/ allmodconfig all" \
+    "kmake -C $lnx ARCH=arm64 KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_assertions_pgo/bin/ allmodconfig all" \
+    "kmake -C $lnx ARCH=arm64 KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_assertions_pgo_bolt/bin/ allmodconfig all"; or return
 
 # x86_64 allmodconfig
 hyperfine \
@@ -130,10 +130,10 @@ hyperfine \
     -p "git -C $lnx cl -q" \
     -S fish \
     -w 1 \
-#    "kmake -C $lnx ARCH=x86_64 KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_pgo/bin/ allmodconfig all" \
-#    "kmake -C $lnx ARCH=x86_64 KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_pgo_bolt/bin/ allmodconfig all" \
-    "kmake -C $lnx ARCH=x86_64 KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_assertions_pgo/bin/ allmodconfig all" \
-    "kmake -C $lnx ARCH=x86_64 KCONFIG_ALLCONFIG=$root/werror.config LLVM=$llvm_install_assertions_pgo_bolt/bin/ allmodconfig all"; or return
+#    "kmake -C $lnx ARCH=x86_64 KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_pgo/bin/ allmodconfig all" \
+#    "kmake -C $lnx ARCH=x86_64 KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_pgo_bolt/bin/ allmodconfig all" \
+    "kmake -C $lnx ARCH=x86_64 KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_assertions_pgo/bin/ allmodconfig all" \
+    "kmake -C $lnx ARCH=x86_64 KCONFIG_ALLCONFIG=$root/werror.config CCACHE=0 LLVM=$llvm_install_assertions_pgo_bolt/bin/ allmodconfig all"; or return
 
 for results in $root/*.md
     mail_msg $results
