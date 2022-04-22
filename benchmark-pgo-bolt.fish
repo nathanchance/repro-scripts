@@ -16,12 +16,12 @@ set lnx $root/linux
 set tc_bld $root/tc-build
 
 # Clone repos
-test -d $tc_bld; or git clone -b bolt https://github.com/nathanchance/tc-build $tc_bld
+test -d $tc_bld; or git clone -b bolt-perf https://github.com/nathanchance/tc-build $tc_bld
 git -C $tc_bld remote update origin; or return
-git -C $tc_bld reset --hard origin/bolt; or return
+git -C $tc_bld reset --hard origin/bolt-perf; or return
 
 test -d $llvm; or git clone https://github.com/llvm/llvm-project $llvm
-git -C $llvm reset --hard 3de29ad20955eb8ed68e831795bf55bfe9fbe58b; or return
+git -C $llvm reset --hard 794a0bb547484ec33c13bd6c7c04b1dbd03d040a; or return
 
 test -d $lnx; or git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/ $lnx
 git -C $lnx reset --hard v5.18-rc3; or return
