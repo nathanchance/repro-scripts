@@ -21,9 +21,9 @@ end
 
 set pkg linux-debug
 set pkgroot $ENV_FOLDER/pkgbuilds/$pkg
-set pkgdir $pkgroot/pkg-fish/$pkg
+set pkgdir $pkgroot/pkg-ext/$pkg
 
-rm -fr $pkgroot/pkg{,-fish} $pkgroot/*.tar.zst
+rm -fr $pkgroot/pkg{,-ext} $pkgroot/*.tar.zst
 
 git cl -q
 
