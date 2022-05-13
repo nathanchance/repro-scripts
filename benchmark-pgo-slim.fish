@@ -43,7 +43,6 @@ set hyperfine_args \
     --command-name "PGO (multiple kernel builds)" \
     --command-name "PGO (one kernel build)" \
     --shell fish \
-    --runs 1 \
     --warmup 1
 
 hyperfine \
