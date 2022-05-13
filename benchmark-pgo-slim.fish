@@ -26,7 +26,7 @@ git -C $llvm reset --hard 85f6b15ee50feb316047f52d4bd6ddc639e3c5c1; or return
 test -d $lnx; or git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/ $lnx
 git -C $lnx reset --hard v5.18-rc6; or return
 
-set llvm_instal_normal $install/normal
+set llvm_install_normal $install/normal
 set llvm_install_pgo $install/pgo
 set llvm_install_pgo_slim $install/pgo-slim
 
