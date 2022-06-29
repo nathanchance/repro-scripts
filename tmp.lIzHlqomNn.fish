@@ -15,6 +15,7 @@ set bld_llvm \
     $CBL_GIT/tc-build/build-llvm.py \
     --build-folder $llvm_bld \
     --llvm-folder $llvm_src \
+    --no-ccache \
     --projects '"clang;lld"' \
     --targets X86
 
