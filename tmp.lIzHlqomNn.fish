@@ -65,7 +65,7 @@ for distro in arch debian fedora opensuse
     end
 
     hyperfine \
-        --command-name "LLVM" \
+        --command-name LLVM \
         --command-name "PGO LLVM" \
         --command-name "PGO + ThinLTO LLVM" \
         --export-markdown $logs/$distro.log \
