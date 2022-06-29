@@ -20,11 +20,15 @@ set bld_llvm \
 
 mkdir -p $logs
 hyperfine \
-    --command-name "Normal LLVM build" \
+    --command-name "`build-llvm.py`" \
+    --command-name "`build-llvm.py --pgo kernel-defconfig`" \
+    --command-name "`build-llvm.py --lto thin --pgo kernel-defconfig`" \
     --export-markdown $logs/llvm.log \
     --runs 1 \
     --shell fish \
-    "$bld_llvm --install-folder $llvm_install/normal"; or return
+    "$bld_llvm --install-folder $llvm_install/normal" \
+    "$bld_llvm --install-folder $llvm_install/pgo --pgo kernel-defconfig" \
+    "$bld_llvm --install-folder $llvm_install/pgo-thinlto --lto thin --pgo kernel-defconfig"; or return
 
 for distro in arch debian fedora opensuse
     set config $workdir/x86_64-$distro.config
@@ -44,10 +48,12 @@ for distro in arch debian fedora opensuse
                 tar xJf data.tar.xz
                 mv -v boot/config-*-amd64 $config
                 popd
-
                 rm -fr $deb_workdir
 
-                $lnx_src/scripts/config --file $config -d SYSTEM_TRUSTED_KEYS -e ANDROID_BINDER_IPC
+                $lnx_src/scripts/config \
+                    --file $config \
+                    -d SYSTEM_TRUSTED_KEYS \
+                    -e ANDROID_BINDER_IPC
 
             case fedora
                 crl -o $config https://src.fedoraproject.org/rpms/kernel/raw/rawhide/f/kernel-x86_64-fedora.config
@@ -58,13 +64,15 @@ for distro in arch debian fedora opensuse
     end
 
     hyperfine \
-        --command-name "Normal LLVM build" \
+        --command-name "LLVM" \
+        --command-name "PGO LLVM" \
+        --command-name "PGO + ThinLTO LLVM" \
         --export-markdown $logs/$distro.log \
-        --parameter-list type normal \
+        --parameter-list type normal,pgo,pgo-thinlto \
         --prepare "rm -fr $lnx_bld; and mkdir -p $lnx_bld; and cp $config $lnx_bld/.config" \
         --runs 1 \
         --shell fish \
-        "kmake -C $lnx_src ARCH=x86_64 CCACHE=0 LLVM=$llvm_install/{type}/bin/ olddefconfig all"; or return
+        "kmake -C $lnx_src ARCH=x86_64 CCACHE=0 LLVM=$llvm_install/{type}/bin/ O=$lnx_bld olddefconfig all"; or return
 end
 
 echo "Files are available in: $logs"
