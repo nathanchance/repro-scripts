@@ -18,6 +18,7 @@ set bld_llvm \
     --projects '"clang;lld"' \
     --targets X86
 
+mkdir -p $logs
 hyperfine \
     --command-name "Normal LLVM build" \
     --export-markdown $logs/llvm.log \
