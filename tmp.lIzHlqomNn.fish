@@ -3,13 +3,18 @@
 cbl_clone_repo linux llvm-project tc-build
 
 set llvm_src $CBL_SRC/llvm-project
-set lnx_src $CBL_SRC/linux
+set linux_src $CBL_SRC/linux
 
 set workdir (mktemp -d -p $TMP_FOLDER)
-set llvm_bld $workdir/build/llvm
-set lnx_bld $workdir/build/linux
-set llvm_install $workdir/install/llvm
+set build $workdir/build
+set configs $workdir/configs
+set install $workdir/install
 set logs $workdir/logs
+
+set llvm_bld $build/llvm
+set linux_bld $build/linux
+
+set llvm_install $install/llvm
 
 set bld_llvm \
     $CBL_GIT/tc-build/build-llvm.py \
@@ -21,9 +26,9 @@ set bld_llvm \
 
 mkdir -p $logs
 hyperfine \
-    --command-name "`build-llvm.py`" \
-    --command-name "`build-llvm.py --pgo kernel-defconfig`" \
-    --command-name "`build-llvm.py --lto thin --pgo kernel-defconfig`" \
+    --command-name "build-llvm.py" \
+    --command-name "build-llvm.py --pgo kernel-defconfig" \
+    --command-name "build-llvm.py --lto thin --pgo kernel-defconfig" \
     --export-markdown $logs/llvm.log \
     --runs 1 \
     --shell fish \
@@ -31,8 +36,10 @@ hyperfine \
     "$bld_llvm --install-folder $llvm_install/pgo --pgo kernel-defconfig" \
     "$bld_llvm --install-folder $llvm_install/pgo-thinlto --lto thin --pgo kernel-defconfig"; or return
 
+git -C $linux_src cl -q
+
 for distro in arch debian fedora opensuse
-    set config $workdir/x86_64-$distro.config
+    set config $configs/x86_64/$distro.config
 
     if not test -f $config
         switch $distro
@@ -51,7 +58,7 @@ for distro in arch debian fedora opensuse
                 popd
                 rm -fr $deb_workdir
 
-                $lnx_src/scripts/config \
+                $linux_src/scripts/config \
                     --file $config \
                     -d SYSTEM_TRUSTED_KEYS \
                     -e ANDROID_BINDER_IPC
@@ -70,10 +77,10 @@ for distro in arch debian fedora opensuse
         --command-name "PGO + ThinLTO LLVM" \
         --export-markdown $logs/$distro.log \
         --parameter-list type normal,pgo,pgo-thinlto \
-        --prepare "rm -fr $lnx_bld; and mkdir -p $lnx_bld; and cp $config $lnx_bld/.config" \
+        --prepare "rm -fr $linux_bld; and mkdir -p $linux_bld; and cp $config $linux_bld/.config" \
         --runs 1 \
         --shell fish \
-        "kmake -C $lnx_src ARCH=x86_64 CCACHE=0 LLVM=$llvm_install/{type}/bin/ O=$lnx_bld olddefconfig all"; or return
+        "kmake -C $linux_src ARCH=x86_64 CCACHE=0 LLVM=$llvm_install/{type}/bin/ O=$linux_bld olddefconfig all"; or return
 end
 
 echo "Files are available in: $logs"
