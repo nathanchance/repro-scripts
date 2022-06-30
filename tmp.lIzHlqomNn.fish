@@ -30,7 +30,6 @@ hyperfine \
     --command-name "build-llvm.py --pgo kernel-defconfig" \
     --command-name "build-llvm.py --lto thin --pgo kernel-defconfig" \
     --export-markdown $logs/llvm.log \
-    --runs 1 \
     --shell fish \
     "$bld_llvm --install-folder $llvm_install/normal" \
     "$bld_llvm --install-folder $llvm_install/pgo --pgo kernel-defconfig" \
@@ -54,7 +53,7 @@ for distro in arch debian fedora opensuse
                 crl -O $deb_url
                 ar x (basename $deb_url)
                 tar xJf data.tar.xz
-                mv -v boot/config-*-amd64 $config
+                mv boot/config-*-amd64 $config
                 popd
                 rm -fr $deb_workdir
 
@@ -78,7 +77,6 @@ for distro in arch debian fedora opensuse
         --export-markdown $logs/$distro.log \
         --parameter-list type normal,pgo,pgo-thinlto \
         --prepare "rm -fr $linux_bld; and mkdir -p $linux_bld; and cp $config $linux_bld/.config" \
-        --runs 1 \
         --shell fish \
         "kmake -C $linux_src ARCH=x86_64 CCACHE=0 LLVM=$llvm_install/{type}/bin/ O=$linux_bld olddefconfig all"; or return
 end
