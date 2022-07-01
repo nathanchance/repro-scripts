@@ -40,6 +40,8 @@ git -C $linux_src cl -q
 for distro in arch debian fedora opensuse
     set config $configs/x86_64/$distro.config
 
+    mkdir -p (dirname $config)
+
     if not test -f $config
         switch $distro
             case arch
