@@ -10,8 +10,12 @@ set lnx_stable $CBL_SRC/linux-stable
 
 # Clean up any previous instances of this testing
 rm -fr $wrktr
-git -C $lnx_mainline worktree prune
-git -C $lnx_stable worktree prune
+if test -d $lnx_mainline
+    git -C $lnx_mainline worktree prune
+end
+if test -d $lnx_stable
+    git -C $lnx_stable worktree prune
+end
 
 for lnx_ver in mainline 5.1{9,5}
     set lnx_src $wrktr/$lnx_ver
