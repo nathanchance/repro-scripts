@@ -71,7 +71,7 @@ for lnx_ver in mainline 5.1{9,5}
                     --directory $lnx_src \
                     --image $GHCR/$toolchain \
                     $tuxmake_args \
-                    --runtime podman \
+                    --runtime podman-local \
                     --target-arch $arch \
                     --toolchain llvm \
                     default
