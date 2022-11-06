@@ -5,33 +5,33 @@ set bntls_bld $TMP_BUILD_FOLDER/binutils-bisect
 set bntls_install $TMP_FOLDER/install/binutils-bisect
 
 if false
-rm -fr $bntls_bld $bntls_install
+    rm -fr $bntls_bld $bntls_install
 
-mkdir -p $bntls_bld
-cd $bntls_bld; or return 125
-$bntls_src/configure \
-    CC=gcc \
-    CFLAGS=-O2 \
-    CXX=g++ \
-    CXXFLAGS=-O2 \
-    --disable-compressed-debug-sections \
-    --disable-gdb \
-    --disable-sim \
-    --disable-werror \
-    --enable-deterministic-archives \
-    --enable-lto \
-    --enable-new-dtags \
-    --enable-plugins \
-    --enable-relro \
-    --enable-threads \
-    --prefix=$bntls_install \
-    --quiet \
-    --target=riscv64-linux-gnu \
-    --with-pic \
-    --with-system-zlib
+    mkdir -p $bntls_bld
+    cd $bntls_bld; or return 125
+    $bntls_src/configure \
+        CC=gcc \
+        CFLAGS=-O2 \
+        CXX=g++ \
+        CXXFLAGS=-O2 \
+        --disable-compressed-debug-sections \
+        --disable-gdb \
+        --disable-sim \
+        --disable-werror \
+        --enable-deterministic-archives \
+        --enable-lto \
+        --enable-new-dtags \
+        --enable-plugins \
+        --enable-relro \
+        --enable-threads \
+        --prefix=$bntls_install \
+        --quiet \
+        --target=riscv64-linux-gnu \
+        --with-pic \
+        --with-system-zlib
 
-make -sj(nproc) V=0; or return 125
-make -sj(nproc) prefix=$bntls_install install; or return 125
+    make -sj(nproc) V=0; or return 125
+    make -sj(nproc) prefix=$bntls_install install; or return 125
 end
 
 set lnx_src $CBL_SRC/linux

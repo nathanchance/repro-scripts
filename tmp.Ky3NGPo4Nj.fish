@@ -1,16 +1,16 @@
 #!/usr/bin/env fish
 
 if false
-set llvm_src $CBL_SRC/llvm-project
-set llvm_bld $TMP_BUILD_FOLDER/llvm-bisect
+    set llvm_src $CBL_SRC/llvm-project
+    set llvm_bld $TMP_BUILD_FOLDER/llvm-bisect
 
-$CBL_GIT/tc-build/build-llvm.py \
-    --assertions \
-    --build-folder $llvm_bld \
-    --build-stage1-only \
-    --llvm-folder $llvm_src \
-    --projects "clang;lld" \
-    --targets X86; or return 125
+    $CBL_GIT/tc-build/build-llvm.py \
+        --assertions \
+        --build-folder $llvm_bld \
+        --build-stage1-only \
+        --llvm-folder $llvm_src \
+        --projects "clang;lld" \
+        --targets X86; or return 125
 end
 
 set lnx_src $CBL_SRC/linux
