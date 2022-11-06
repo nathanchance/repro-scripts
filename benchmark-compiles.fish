@@ -165,3 +165,7 @@ for build_type in two-stage pgo-defconfig pgo-defconfig-allmodconfig
         --prepare "rm -fr $llvm_bld $llvm_install" \
         "$base_bld_llvm_cmd $bld_llvm_args"; or return
 end
+
+rm -fr $llvm_src $lnx_src
+git -C $llvm_git worktree prune
+git -C $lnx_git worktree prune
