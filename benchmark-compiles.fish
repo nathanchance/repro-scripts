@@ -160,7 +160,7 @@ for build_type in two-stage pgo-defconfig pgo-defconfig-allmodconfig
                 --pgo kernel-{def,allmod}config
     end
 
-    $base_hyperfind_cmd \
+    $base_hyperfine_cmd \
         --command-name "$(basename $base_bld_llvm_cmd[1]) ($build_type)" \
         --prepare "rm -fr $llvm_bld $llvm_install" \
         "$base_bld_llvm_cmd $bld_llvm_args"; or return
