@@ -42,8 +42,8 @@ command -q hyperfine; or upd hyperfine
 cbl_clone_repo linux llvm-project tc-build
 
 # Update sources
-git -C $llvm_git ru; or return
-git -C $lnx_git ru; or return
+git -C $llvm_git ru origin; or return
+git -C $lnx_git ru origin; or return
 git -C $tc_bld urh; or return
 
 # Create worktrees
