@@ -135,7 +135,7 @@ $base_make_cmd $make_args olddefconfig &&
                 set prepare_cmd \
                     "rm -fr $lnx_bld &&
 printf 'CONFIG_GCOV_KERNEL=n\nCONFIG_KASAN=n\nCONFIG_LTO_CLANG_THIN=y\n' >$tmp_file &&
-$base_make_cmd $make_args KCONFIG_ALLCONFIG=$tmpfile allmodconfig &&
+$base_make_cmd $make_args KCONFIG_ALLCONFIG=$tmp_file allmodconfig &&
 rm -fr $tmp_file &&
 { grep -q ^CONFIG_LTO_CLANG_THIN=y $lnx_bld/.config || exit 1; }"
         end
