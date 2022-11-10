@@ -7,7 +7,7 @@ set mainline_src $CBL_WRKTR/mainline
 
 in_container_msg -c; or return
 cbl_clone_repo linux
-command -q hypefine; or upd hyperfine
+command -q hyperfine; or upd hyperfine
 
 begin
     git -C $lnx_git ru origin
