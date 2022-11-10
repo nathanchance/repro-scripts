@@ -19,8 +19,8 @@ begin
 end; or return
 
 hyperfine \
-    --command-name mainline \
-    --command-name tip \
+    --command-name "mainline @ "(git -C $mainline_src kf) \
+    --command-name "tip @ "(git -C $tip_src kf) \
     --parameter-list src $mainline_src,$tip_src \
     --prepare "rm -rf $lnx_bld" \
     --runs 3 \

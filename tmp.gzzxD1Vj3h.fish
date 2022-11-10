@@ -30,14 +30,14 @@ begin
 end; or return
 
 hyperfine \
-    --command-name mainline \
-    --command-name tip \
+    --command-name "mainline @ "(git -C $mainline_src kf) \
+    --command-name "tip @ "(git -C $tip_src kf) \
     --parameter-list src $mainline_src,$tip_src \
     --prepare "rm -rf $lnx_bld" \
     --runs 3 \
     --shell fish \
     --warmup 1 \
-    "tuxmake -a x86_64 -b $lnx_bld -C {tree} -k allyesconfig -r $runtime -t llvm-15 default"
+    "tuxmake -a x86_64 -b $lnx_bld -C {src} -k allyesconfig -r $runtime -t llvm-15 default"
 
 rm -fr $mainline_src $tip_src
 git -C $lnx_git worktree prune
