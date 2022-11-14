@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 set lnx_src $CBL_SRC/linux
-set lnx_bld $TMP_BUILD_FOLDER/linux
+set lnx_bld $TMP_BUILD_FOLDER/linux-benchmarking
 set lnx_ver v6.1-rc5
 
 set baseline $CBL_WRKTR/linux-baseline
@@ -35,7 +35,8 @@ set kmake \
     make \
     -skj(nproc) \
     ARCH=arm64 \
-    LLVM=1
+    LLVM=1 \
+    O=$lnx_bld
 
 # Test difference
 hyperfine \
