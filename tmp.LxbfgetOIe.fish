@@ -1,10 +1,15 @@
 #!/usr/bin/env fish
 
+set tc_bld $CBL_GIT/tc-build
 set llvm_src $CBL_WRKTR/llvm-project-bisect
 set bld_root (mktemp -d -p $TMP_BUILD_FOLDER)
 set llvm_bld $bld_root/llvm
 
-if not $CBL_GIT/tc-build/build-llvm.py \
+if not test -x $tc_bld/install/bin/powerpc-linux-gnu-as
+    $tc_bld/build-binutils.py -t powerpc; or return 125
+end
+
+if not $tc_bld/build-llvm.py \
         --assertions \
         --build-folder $llvm_bld \
         --build-stage1-only \
@@ -22,7 +27,7 @@ if not make \
         -C $lnx_src \
         -skj(nproc) \
         ARCH=powerpc \
-        CROSS_COMPILE=powerpc-linux-gnu- \
+        CROSS_COMPILE=$tc_bld/install/bin/powerpc-linux-gnu- \
         LLVM=1 \
         LLVM_IAS=0 \
         O=$lnx_bld \
