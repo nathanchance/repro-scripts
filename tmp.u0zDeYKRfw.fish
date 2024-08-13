@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set llvm_src $CBL_WRKTR/llvm-project-mips32r1-crash
+set llvm_src $CBL_WRKTR/llvm-project/mips-32r1-crash
 set llvm_bld $TMP_BUILD_FOLDER/llvm-project-bisect
 
 $CBL_GIT/tc-build/build-llvm.py \

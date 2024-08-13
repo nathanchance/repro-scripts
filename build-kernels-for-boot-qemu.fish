@@ -52,7 +52,7 @@ for arch in $arches
 
         case m68k
             set llvm false
-            set -a kmake_variables ARCH=m68k CROSS_COMPILE=/usr/bin/m68k-linux-gnu-
+            set -a kmake_variables ARCH=m68k (korg_gcc print 12 m68k)
             set -a kmake_targets mac_defconfig vmlinux
 
         case mips mipsel
