@@ -1,41 +1,62 @@
 #!/usr/bin/env fish
 
-set llvm_src $CBL_SRC_W/llvm-project/sparc
-set llvm_bld (tbf $llvm_src)
+for arg in $argv
+    switch $arg
+        case -l --llvm
+            set tc llvm
+        case -g --gcc
+            set tc gcc
+    end
+end
+if not set -q tc
+    set tc llvm
+end
 
-$CBL_GIT/tc-build/build-llvm.py \
-    --assertions \
-    --build-folder $llvm_bld \
-    --build-stage1-only \
-    --build-targets distribution \
-    --llvm-folder $llvm_src \
-    --projects clang lld \
-    --quiet-cmake \
-    --targets Sparc (get_host_llvm_target)
-or return
+switch $tc
+    case gcc
+        set kmake_args (korg_gcc var sparc64)
+
+    case llvm
+        set llvm_src $CBL_SRC_W/llvm-project/sparc
+        set llvm_bld (tbf $llvm_src)
+
+        $CBL_GIT/tc-build/build-llvm.py \
+            --assertions \
+            --build-folder $llvm_bld \
+            --build-stage1-only \
+            --build-targets distribution \
+            --llvm-folder $llvm_src \
+            --projects clang lld \
+            --quiet-cmake \
+            --targets Sparc (get_host_llvm_target)
+        or exit
+
+        if not command -q sparc64-linux-gnu-elfedit
+            switch (get_distro)
+                case arch
+                    sudo pacman -U --noconfirm $GITHUB_FOLDER/arch-repo/x86_64/sparc64-linux-gnu-binutils-*-x86_64.pkg.tar.zst
+                case fedora
+                    sudo dnf install -y binutils-sparc64-linux-gnu
+                case '*'
+                    print_error "Don't know how to install sparc64 binutils for this distro?"
+                    exit 1
+            end
+            or exit
+        end
+
+        set kmake_args \
+            CC=$llvm_bld/final/bin/clang \
+            CROSS_COMPILE=sparc64-linux-gnu- \
+            LLVM_IAS=0
+end
 
 set lnx_src $CBL_SRC_W/linux/sparc
 set lnx_bld (tbf $lnx_src)
 
-if not command -q sparc64-linux-gnu-elfedit
-    switch (get_distro)
-        case arch
-            sudo pacman -U --noconfirm $GITHUB_FOLDER/arch-repo/x86_64/sparc64-linux-gnu-binutils-*-x86_64.pkg.tar.zst
-        case fedora
-            sudo dnf install -y binutils-sparc64-linux-gnu
-        case '*'
-            print_error "Don't know how to install sparc64 binutils for this distro?"
-            exit 1
-    end
-    or exit
-end
-
 kmake \
     -C $lnx_src \
     ARCH=sparc \
-    CC=$llvm_bld/final/bin/clang \
-    CROSS_COMPILE=sparc64-linux-gnu- \
-    LLVM_IAS=0 \
+    $kmake_args \
     O=$lnx_bld \
     mrproper defconfig all
 or exit
@@ -57,13 +78,13 @@ if not command -q qemu-system-sparc64
     or exit
 end
 
-qemu-system-sparc64 \
+/usr/bin/qemu-system-sparc64 \
     -M sun4u \
     -append console=ttyS0 \
     -cpu 'TI UltraSparc IIi' \
     -display none \
     -initrd $initrd \
     -kernel $lnx_bld/arch/sparc/boot/image \
-    -m 512 \
+    -m 2G \
     -no-reboot \
     -serial mon:stdio
