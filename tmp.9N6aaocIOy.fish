@@ -28,7 +28,7 @@ begin
         --set-val NR_CPUS 2048
     and $kmake
     and $sc --enable CPUMASK_OFFSTACK \
-            --set-val NR_CPUS 8192
+        --set-val NR_CPUS 8192
 end
 or return 125
 

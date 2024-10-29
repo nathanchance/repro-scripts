@@ -34,7 +34,7 @@ set ret $pipestatus
 if git bisect log &>/dev/null # bisecting
     switch $ret[1]
         case 0
-            return $ret[2]  # reverse bisect
+            return $ret[2] # reverse bisect
         case "*"
             return 125
     end

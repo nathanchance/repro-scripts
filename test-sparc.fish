@@ -6,6 +6,8 @@ for arg in $argv
             set tc llvm
         case -g --gcc
             set tc gcc
+        case -s --skip-llvm-build
+            set skip_llvm_build true
     end
 end
 if not set -q tc
@@ -20,16 +22,18 @@ switch $tc
         set llvm_src $CBL_SRC_W/llvm-project/sparc
         set llvm_bld (tbf $llvm_src)
 
-        $CBL_GIT/tc-build/build-llvm.py \
-            --assertions \
-            --build-folder $llvm_bld \
-            --build-stage1-only \
-            --build-targets distribution \
-            --llvm-folder $llvm_src \
-            --projects clang lld \
-            --quiet-cmake \
-            --targets Sparc (get_host_llvm_target)
-        or exit
+        if not set -q skip_llvm_build
+            $CBL_GIT/tc-build/build-llvm.py \
+                --assertions \
+                --build-folder $llvm_bld \
+                --build-stage1-only \
+                --build-targets distribution \
+                --llvm-folder $llvm_src \
+                --projects clang lld \
+                --quiet-cmake \
+                --targets Sparc (get_host_llvm_target)
+            or exit
+        end
 
         if not command -q sparc64-linux-gnu-elfedit
             switch (get_distro)
@@ -55,7 +59,7 @@ set lnx_bld (tbf $lnx_src)
 
 kmake \
     -C $lnx_src \
-    ARCH=sparc \
+    ARCH=sparc64 \
     $kmake_args \
     O=$lnx_bld \
     mrproper defconfig all
