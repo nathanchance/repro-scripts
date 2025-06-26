@@ -14,7 +14,6 @@ for i in (seq 30 32)
         drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn$i/display_mode_vba_$i.o
 end
 
-
 echo "allmodconfig:"
 echo
 

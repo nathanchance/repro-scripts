@@ -3,8 +3,6 @@
 set llvm $CBL_SRC/llvm-project
 set build $llvm/build
 
-
-
 # Avoid known test failure
 if grep -q "RUN: grep x86_64-unknown-linux-gnu %t-embedded.cmd | count 1" $llvm/clang/test/CodeGen/thinlto_embed_bitcode.ll
     git cp -n 2482648a795afbe12774168bbbf70dc14c031267
@@ -28,11 +26,7 @@ if test $llvm_ret -ne 0
     exit 125
 end
 
-
-
 cd $CBL_SRC/linux-next; or exit 125
-
-
 
 # defconfig plus KASAN choices should be fine
 git cl -q
@@ -53,8 +47,6 @@ podcmd -s -v $build/stage1:/tc kmake LLVM=1 bzImage; or exit 125
 
 podcmd kboot -a x86_64 -t 3m; or exit 125
 
-
-
 # defconfig plus GCOV choices should be fine
 git cl -q
 
@@ -71,8 +63,6 @@ rg "CONFIG_(KASAN|GCOV)" .config
 podcmd -s -v $build/stage1:/tc kmake LLVM=1 bzImage; or exit 125
 
 podcmd kboot -a x86_64 -t 3m; or exit 125
-
-
 
 # defconfig plus both GCOV and KASAN choices has issues
 git cl -q
@@ -102,8 +92,6 @@ end
 podcmd -s -v $build/stage1:/tc kmake KCFLAGS=$lpm_flag LLVM=1 bzImage; or exit 125
 
 podcmd kboot -a x86_64 -t 3m
-
-
 
 # defconfig plus both GCOV and KASAN choices has issues
 git cl -q
