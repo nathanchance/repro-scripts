@@ -1,5 +1,0 @@
-name: linting
-on: [push, pull_request]
-jobs:
-  fish:
-    uses: nathanchance/actions-workflows/.github/workflows/fish_format.yml@main
