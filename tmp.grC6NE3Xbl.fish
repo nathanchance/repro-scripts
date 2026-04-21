@@ -3,7 +3,10 @@
 __in_tree kernel
 or return 128
 
-if false
+set patch_krnl false
+set patch_cleanup false
+
+if test $patch_krnl = true
     begin
         git diff 60ddf3eed499^..087dd6d2cc12 | git ap
         and git diff dc432ab7130b^..05988dba1179 | git ap --exclude init/main.c
@@ -40,7 +43,7 @@ kmake \
     O=$lnx_bld \
     mrproper ppc64_guest_defconfig vmlinux
 set krnl_ret $status
-if false
+if test $patch_cleanup = true
     test $krnl_ret -eq 0
     or set ret 125
     git rh
